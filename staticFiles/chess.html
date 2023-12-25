@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>first game</title>
+    <link rel="stylesheet" href="chess.css">
+</head>
+<body>
+    <div class="container">
+        <h1>level <span class="level">1</span></h1>
+        <p>
+            player 1:  <span class="person">x</span>
+        </p>
+        <p>
+            player 2:  <span class="computer">o</span>
+        </p>
+        <div class="board"></div>
+        <div class="contain">
+            <button class="reset" onclick="reset()">RESET</button>
+            <button class="swit">NEXT =></button>
+            <button class="prev" onclick="prev()">prev</button>
+        </div>
+    </div>
+    <script src="chess.js"></script>
+</body>
+</html>

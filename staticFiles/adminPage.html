@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>admin Page</title>
+</head>
+<body>
+    <div class="container">
+        <table>
+            <tr>
+                <th>userName</th>
+                <th>current state</th>
+                <th>level</th>
+            </tr>
+        </table>
+    </div>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            color: #fff;
+            font-family: monospace;
+            text-transform: capitalize;
+        }
+        body{
+            height: 100vh;
+            width: 100vw;
+        }
+        .container{
+            height: 100%;
+            width: 100%;
+            background: #171717;
+            display: flex;
+            justify-content: center;
+            padding-top: 20px;
+            align-items: flex-start;
+        }
+        table{
+            border-collapse: separate;
+            width: 100%;
+            max-width: 500px;
+        }
+        tr,th,td{
+            padding: 10px;
+            border: 1px solid #fff;
+            text-align: center;
+        }
+    </style>
+    <script>
+        const ws = new WebSocket('ws://localhost:8090');
+        ws.addEventListener('open' ,() =>{
+            const parent = document.querySelector('table')
+            ws.send(JSON.stringify({purpose:'adminLogin'}))
+            ws.addEventListener('message', ({data}) =>{
+            const newData = JSON.parse(data);
+            console.log(newData)
+            switch(true)
+            {
+                case newData.purpose === 'update':
+                    parent.innerHTML = ''
+                    const tr = document.createElement('tr')
+                    for(let i = 0; i < 3; i++)
+                    {
+                        const th = document.createElement('th');
+                        switch(true)
+                        {
+                            case i === 0:
+                                th.textContent = 'username';
+                            break;
+                            case i === 1:
+                                th.textContent = 'current state';
+                            break;
+                            case i === 2:
+                                th.textContent = 'level'
+                        }
+                        tr.appendChild(th)
+                    }
+                    parent.appendChild(tr)
+                    
+                    let message = newData.msg;
+                    Object.keys(message).forEach(val =>{
+                        console.log(val)
+                        let tr = document.createElement('tr');
+                        let td1 = document.createElement('td');
+                        let td2 = document.createElement('td');
+                        let td3 = document.createElement('td');
+                        parent.appendChild(tr);
+                        tr.appendChild(td1)
+                        tr.appendChild(td2);
+                        tr.appendChild(td3);
+
+                        td1.textContent = val;
+                        td2.textContent = message[`${val}`]['state']
+                        td3.textContent = message[`${val}`]['stateNum']
+                    })
+            }
+            })
+        })
+    </script>
+</body>
+</html>
