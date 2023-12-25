@@ -8,7 +8,7 @@ let combination = [];
 let num = 2;
 let speechObject;
 const bod = document.createElement('div');
-const ws = new WebSocket('ws://localhost:8090');
+const ws = new WebSocket('wss://devbatsy.onrender.com/');
 let yourTurn = true
 let clientName = null;
 class serverPackage{
